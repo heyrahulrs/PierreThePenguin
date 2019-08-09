@@ -7,83 +7,108 @@
 //
 
 import SpriteKit
-import GameplayKit
 
 class GameScene: SKScene {
     
-    private var label : SKLabelNode?
-    private var spinnyNode : SKShapeNode?
+    var cam = SKCameraNode()
+    let ground = Ground()
+    
+    let player = Player()
+    
+    let bee = SKSpriteNode(imageNamed: "bee")
     
     override func didMove(to view: SKView) {
         
-        // Get label node from scene and store it for use later
-        self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
-        if let label = self.label {
-            label.alpha = 0.0
-            label.run(SKAction.fadeIn(withDuration: 2.0))
-        }
+        self.anchorPoint = .zero
         
-        // Create shape node to use during mouse interaction
-        let w = (self.size.width + self.size.height) * 0.05
-        self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
+        self.camera = cam
         
-        if let spinnyNode = self.spinnyNode {
-            spinnyNode.lineWidth = 2.5
-            
-            spinnyNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(Double.pi), duration: 1)))
-            spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
-                                              SKAction.fadeOut(withDuration: 0.5),
-                                              SKAction.removeFromParent()]))
-        }
-    }
-    
-    
-    func touchDown(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.green
-            self.addChild(n)
-        }
-    }
-    
-    func touchMoved(toPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.blue
-            self.addChild(n)
-        }
-    }
-    
-    func touchUp(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.red
-            self.addChild(n)
-        }
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let label = self.label {
-            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
-        }
+        addBackground()
         
-        for t in touches { self.touchDown(atPoint: t.location(in: self)) }
+        ground.position = CGPoint(x: -self.size.width * 2, y: 0)
+        ground.size = CGSize(width: self.size.width * 6, height: 0)
+        ground.createChildren()
+        
+        addChild(ground)
+        
+        player.position = CGPoint(x: 150, y: 200)
+        addChild(player)
+        
+        addBee()
+        
+        let bee2 = Bee()
+        bee2.position = CGPoint(x: 325, y: 325)
+        addChild(bee2)
+
+        let bee3 = Bee()
+        bee3.position = CGPoint(x: 200, y: 325)
+        addChild(bee3)
+        
+        bee2.physicsBody?.mass = 0.2
+        bee2.physicsBody?.applyImpulse(CGVector(dx: -25, dy: 0))
+        
     }
     
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
+    override func didSimulatePhysics() {
+        self.camera!.position = bee.position
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
+    func addBackground() {
+        
+        backgroundColor = UIColor(red: 0.4, green: 0.6, blue: 0.95, alpha: 1.0)
+        
+        let background = SKSpriteNode(imageNamed: "background-menu")
+        background.position = CGPoint(x: 150, y: 250)
+        background.zPosition = -1
+        background.blendMode = .replace
+        addChild(background)
     }
     
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
+    func addBee() {
+        
+        bee.position = CGPoint(x: 250, y: 250)
+        bee.size = CGSize(width: 28, height: 24)
+        
+        addChild(bee)
+        
+        addFlyingAction()
+        addMovingAction()
+        
     }
     
-    
-    override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
+    func addFlyingAction() {
+        let beeAtlas = SKTextureAtlas(named: "Enemies")
+        
+        let beeFrames: [SKTexture] = [
+            beeAtlas.textureNamed("bee"),
+            beeAtlas.textureNamed("bee-fly")
+        ]
+        
+        let flyAction = SKAction.animate(with: beeFrames, timePerFrame: 0.16)
+        
+        let flyActionRepeating = SKAction.repeatForever(flyAction)
+        
+        bee.run(flyActionRepeating)
     }
+    
+    func addMovingAction() {
+        
+        let pathLeft = SKAction.moveBy(x: -200, y: -10, duration: 2)
+        let pathRight = SKAction.moveBy(x: 200, y: 10, duration: 2)
+        
+        let flipTextureNegative = SKAction.scaleX(to: -1, duration: 0)
+        let flipTexturePositive = SKAction.scaleX(to: 1, duration: 0)
+        
+        let flightOfTheBee = SKAction.sequence(
+            [
+                pathLeft, flipTextureNegative,
+                pathRight, flipTexturePositive
+            ]
+        )
+        
+        let flightAction = SKAction.repeatForever(flightOfTheBee)
+        
+        bee.run(flightAction)
+    }
+    
 }

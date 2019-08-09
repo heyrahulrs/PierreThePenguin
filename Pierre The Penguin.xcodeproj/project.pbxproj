@@ -15,6 +15,7 @@
 		20B2806522FAA3270080844D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20B2806322FAA3270080844D /* Main.storyboard */; };
 		20B2806722FAA3290080844D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20B2806622FAA3290080844D /* Assets.xcassets */; };
 		20B2806A22FAA3290080844D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20B2806822FAA3290080844D /* LaunchScreen.storyboard */; };
+		20F36AA522FAD38D0004FCB3 /* GameSprite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F36AA422FAD38D0004FCB3 /* GameSprite.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		20B2806622FAA3290080844D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		20B2806922FAA3290080844D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		20B2806B22FAA3290080844D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		20F36AA422FAD38D0004FCB3 /* GameSprite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSprite.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 				20B2805B22FAA3270080844D /* GameScene.sks */,
 				20B2805D22FAA3270080844D /* Actions.sks */,
 				20B2805F22FAA3270080844D /* GameScene.swift */,
+				20F36AA422FAD38D0004FCB3 /* GameSprite.swift */,
 				20B2806122FAA3270080844D /* GameViewController.swift */,
 				20B2806322FAA3270080844D /* Main.storyboard */,
 				20B2806622FAA3290080844D /* Assets.xcassets */,
@@ -146,6 +149,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20F36AA522FAD38D0004FCB3 /* GameSprite.swift in Sources */,
 				20B2806022FAA3270080844D /* GameScene.swift in Sources */,
 				20B2806222FAA3270080844D /* GameViewController.swift in Sources */,
 				20B2805A22FAA3270080844D /* AppDelegate.swift in Sources */,
@@ -298,7 +302,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.rahulrs0029.Pierre-The-Penguin";
+				PRODUCT_BUNDLE_IDENTIFIER = com.rahulrs0029.pierrethepenguin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -315,7 +319,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.rahulrs0029.Pierre-The-Penguin";
+				PRODUCT_BUNDLE_IDENTIFIER = com.rahulrs0029.pierrethepenguin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
